@@ -6,6 +6,7 @@ const { mongoose } = require('./db.js');
 var BacSiController = require('./controllers/BacSiController.js');
 var employeeController = require('./controllers/employeeController.js');
 var lichKhamController = require('./controllers/lichKhamController.js');
+var BSDichVuController = require('./controllers/BSDichVuController.js');
 
 var app = express();
 app.use(bodyParser.json());
@@ -15,5 +16,5 @@ app.listen(3000, () => console.log('Server started at port : 3000'));
 
 
 app.use('/BacSis', BacSiController);
+app.use('/dsBSDichVu', BSDichVuController);
 app.use('/dsLichKham', lichKhamController);
-app.use('/employees', employeeController);

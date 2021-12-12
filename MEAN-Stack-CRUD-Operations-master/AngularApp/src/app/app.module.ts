@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { BacSiComponent } from './BacSi/BacSi.component';
 import { LichKhamComponent } from './LichKham/lichKham.component';
+import { BSDichVuComponent } from './BSDichVu/BSDichVu.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { LichKhamComponent } from './LichKham/lichKham.component';
     AppComponent,
     EmployeeComponent,
     BacSiComponent,
-    LichKhamComponent
+    LichKhamComponent,
+    BSDichVuComponent
   ],
   imports: [
     BrowserModule,
