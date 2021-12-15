@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { EmployeeService } from '../shared/employee.service';
@@ -12,6 +12,7 @@ declare var M: any;
   styleUrls: ['./employee.component.css'],
   providers: [EmployeeService]
 })
+
 export class EmployeeComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService) { }

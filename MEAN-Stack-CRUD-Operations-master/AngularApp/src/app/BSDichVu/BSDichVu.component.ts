@@ -1,24 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+
+import { DichVuService } from '../shared/dichVu.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { BSDichVuService } from '../shared/BSDichVu.service';
 import { BSDichVu } from '../shared/BSDichVu.model';
-
+import { DichVu } from '../shared/dichVu.model';
+import { BacSi } from '../shared/BacSi.model';
+import { BacSiService } from '../shared/BacSi.service';
+// import { Table } from "primeng/table";
 declare var M: any;
 
 @Component({
   selector: 'app-BSDichVu',
   templateUrl: './BSDichVu.component.html',
   styleUrls: ['./BSDichVu.component.css'],
-  providers: [BSDichVuService]
+  providers: [BSDichVuService, DichVuService, BacSiService]
 })
 export class BSDichVuComponent implements OnInit {
-
-  constructor(private BSDichVuService: BSDichVuService) { }
+  // @ViewChild('dt') table: Table;
+  _DichVu: any;
+  _BacSi: any;
+  
+  constructor(
+    private BSDichVuService: BSDichVuService,
+    private DichVuService: DichVuService,
+    private BacSiService: BacSiService) { }
 
   ngOnInit() {
     this.resetForm();
     this.refreshBSDichVuList();
+    this.getDichVuList();
+    this.getBacSiList();
   }
 
   resetForm(form?: NgForm) {
@@ -26,15 +39,16 @@ export class BSDichVuComponent implements OnInit {
       form.reset();
     this.BSDichVuService.selectedBSDichVu = {
       _id: "",
-      MaDichVu: "",
-      MaBacSi: "",
-      TenDichVu: "",
-      DonGiaDichVu: null
+      maDichVu: "",
+      maBacSi: "",
+      tenDichVu: "",
+      tenBacSi: "",
+      donGiaDichVu: null
     }
   }
 
   onSubmit(form: NgForm) {
-    if (form.value._id == "") {
+    if (form.value._id == "" || form.value._id == null) {
       this.BSDichVuService.postBSDichVu(form.value).subscribe((res) => {
         this.resetForm(form);
         this.refreshBSDichVuList();
@@ -54,8 +68,18 @@ export class BSDichVuComponent implements OnInit {
     this.BSDichVuService.getBSDichVuList().subscribe((res) => {
       this.BSDichVuService.dsBSDichVu = res as BSDichVu[];
     });
+    
   }
-
+  getDichVuList(){
+    this.DichVuService.getDichVuList().subscribe((res) =>{
+      this.DichVuService.dsDichVu = res as DichVu[];
+    })
+  }
+  getBacSiList() {
+    this.BacSiService.getBacSiList().subscribe((res) => {
+      this.BacSiService.BacSis = res as BacSi[];
+    });
+  }
   onEdit(BSDV: BSDichVu) {
     this.BSDichVuService.selectedBSDichVu = BSDV;
   }
@@ -69,5 +93,16 @@ export class BSDichVuComponent implements OnInit {
       });
     }
   }
-
+  changeOptionService(maDichVu?: string){
+    this._DichVu = this.DichVuService.dsDichVu.find( (t) => 
+       t.maDichVu == maDichVu
+     );
+     this.BSDichVuService.selectedBSDichVu.tenDichVu = this._DichVu.tenDichVu;
+   }
+  changeOptionDoctor(maBacSi?: string){
+    this._BacSi = this.BacSiService.BacSis.find( (t) => 
+       t.MaBacSi == maBacSi
+     );
+     this.BSDichVuService.selectedBSDichVu.tenBacSi = this._BacSi.TenBacSi;
+   }
 }

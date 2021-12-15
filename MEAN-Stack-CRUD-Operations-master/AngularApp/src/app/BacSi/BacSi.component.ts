@@ -28,7 +28,7 @@ export class BacSiComponent implements OnInit {
       _id: "",
       MaBacSi: "",
       TenBacSi: "",
-      SDT: null,
+      SDT: "",
       GioiThieuChung: "",
       ChiPhiTuVan: null,
       ChucVi: "",

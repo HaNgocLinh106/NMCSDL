@@ -2,7 +2,7 @@ export class BacSi {
     _id: string;
     MaBacSi: string;
     TenBacSi: string;
-    SDT: number;
+    SDT: string;
     GioiThieuChung: string;
     ChiPhiTuVan: number;
     ChucVi: string;
