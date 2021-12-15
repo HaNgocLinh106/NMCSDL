@@ -3,37 +3,30 @@
         <div class="card">
             <div class="card-content white-text">
                 <div class="row">
-                    <div class="col s5">
-                        <form id="lichKhamForm" #lichKhamForm="ngForm" (ngSubmit)="onSubmit(lichKhamForm)">
+                    <div class="col s4">
+                        <div style="font-size: 25px;">Thêm lịch khám: </div>
+                        <form id="lichKhamForm" style="padding: 20px;" #lichKhamForm="ngForm" (ngSubmit)="onSubmit(lichKhamForm)">
                             <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="lichKhamService.selectedLichKham._id">
-                            <!-- <div class="row">
-                                <div class="input-field col s12">
-                                    <input type="text" name="maLichKham" #name="ngModel" [(ngModel)]="lichKhamService.selectedLichKham.maLichKham" placeholder="Enter full name" required>
-                                    <label>Mã lịch khám :
-                                    <label class="red-text">*</label>
-                                    </label>
-                                </div>
-                            </div> -->
-                            <div class="row">
-                                <label class="label-gio">Mã bác sĩ :<span class="red-text"> *</span></label>
+                            <div class="row row-item">
+                                <label class="label-gio">Chọn bác sĩ :<span class="red-text"> *</span></label>
                                 <div class="input-field col s12">
                                     <select name="maBacSi" [(ngModel)]="lichKhamService.selectedLichKham.maBacSi" required (change)="changeOptionDoctor(lichKhamService.selectedLichKham.maBacSi)">
                                         <option *ngFor=" let BacSi of BacSiService.BacSis"  value="{{BacSi.MaBacSi}}">Mã: {{BacSi.MaBacSi}} - {{BacSi.TenBacSi}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row" style="margin: 0; height: 0;">
+                            <div class="row row-item" style="margin: 0; height: 0;">
                                 <div class="input-field col s12">
                                     <input type="hidden" name="tenBacSi" #name="ngModel" [(ngModel)]="lichKhamService.selectedLichKham.tenBacSi">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row row-item">
                                 <div class="input-field col s12">
                                     <input type="date" name="ngay" #name="ngModel" [(ngModel)]="lichKhamService.selectedLichKham.ngay" placeholder="Chọn ngày khám" required>
                                     <label>Ngày :<span class="red-text"> *</span></label>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row row-item">
                                 <label class="label-gio">Giờ :<span class="red-text"> *</span></label>
                                 <div class="input-field col s12">
                                     <select name="gio" [(ngModel)]="lichKhamService.selectedLichKham.gio" required>
@@ -49,37 +42,47 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col s7">
+                    <!-- <div class="col s1"></div> -->
+                    <div class="col s7" stype="padding:20px">
+                        <div style="font-size: 25px">Danh sách lịch khám:</div>
+                        <div class="search-box">
+                            <input type="text" style="width:80%" id="searchBox" name="searchBox" [(ngModel)]="textSearch" placeholder="Tìm theo mã bác sĩ/Tên bác sĩ/Ngày/Giờ" />
+                            <button style="width: 20%; margin-bottom: 8px;" (click)="search()">Tìm kiếm</button>
+                            <button style="width: 12%; margin-left:5px; margin-bottom: 8px;" (click)="Reset()">Reset</button>
+                        </div>
                         <!-- <test></test> -->
 
                         <!-- <test></test> -->
-                        <table class="responsive-table highlight">
-                            <thead>
-                                <tr>
-                                    <!-- <th>Mã lịch khám</th> -->
-                                    <th>Mã Bác sĩ</th>
-                                    <th>Tên Bác sĩ</th>
-                                    <th>Ngày</th>
-                                    <th>Giờ</th>
-                                    <th></th>
+                        <div style="height: 500px; overflow: auto;">
+                            <table class="responsive-table highlight">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>Mã lịch khám</th> -->
+                                        <th>Mã Bác sĩ</th>
+                                        <th>Tên Bác sĩ</th>
+                                        <th>Ngày</th>
+                                        <th>Giờ</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tr *ngFor="let emp of dsLichKham">
+                                    <!-- <td>{{emp.maLichKham}}</td> -->
+                                    <td>{{emp.maBacSi}}</td>
+                                    <td>{{emp.tenBacSi}}</td>
+                                    <td>{{emp.ngay}}</td>
+                                    <td>{{emp.gio}}</td>
+                                    <td>
+                                        <a class="action-btn" (click)="onEdit(emp)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a class="action-btn" (click)="onDelete(emp._id,lichKhamForm)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tr *ngFor="let emp of lichKhamService.dsBSLichKham">
-                                <!-- <td>{{emp.maLichKham}}</td> -->
-                                <td>{{emp.maBacSi}}</td>
-                                <td>{{emp.tenBacSi}}</td>
-                                <td>{{emp.ngay}}</td>
-                                <td>{{emp.gio}}</td>
-                                <td>
-                                    <a class="action-btn" (click)="onEdit(emp)">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                    <a class="action-btn" (click)="onDelete(emp._id,lichKhamForm)">
-                                        <i class="material-icons">delete</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

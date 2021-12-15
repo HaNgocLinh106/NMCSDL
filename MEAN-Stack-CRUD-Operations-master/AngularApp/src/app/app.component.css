@@ -12,3 +12,25 @@ mat-sidenav {
     width: 200px;
     background-color: #f4f4f4;
 }
+
+ul li {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.router-active {
+    background-color: #2f89fc
+}
+
+.sidebar-logo {
+    background-color: #dcebf8;
+    padding: 10px 10px 10px 15px;
+}
+
+.sidebar-logo-img {
+    background-image: url("../assets/images/Group-1223.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #dcebf8;
+    width: 100%;
+    height: 50px;
+}

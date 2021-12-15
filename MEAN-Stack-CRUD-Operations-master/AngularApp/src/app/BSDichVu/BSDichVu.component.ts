@@ -21,7 +21,8 @@ export class BSDichVuComponent implements OnInit {
   // @ViewChild('dt') table: Table;
   _DichVu: any;
   _BacSi: any;
-  
+  textSearch: any;
+  dsBSDichVu: any;
   constructor(
     private BSDichVuService: BSDichVuService,
     private DichVuService: DichVuService,
@@ -67,6 +68,7 @@ export class BSDichVuComponent implements OnInit {
   refreshBSDichVuList() {
     this.BSDichVuService.getBSDichVuList().subscribe((res) => {
       this.BSDichVuService.dsBSDichVu = res as BSDichVu[];
+      this.dsBSDichVu = this.BSDichVuService.dsBSDichVu ;
     });
     
   }
@@ -105,4 +107,22 @@ export class BSDichVuComponent implements OnInit {
      );
      this.BSDichVuService.selectedBSDichVu.tenBacSi = this._BacSi.TenBacSi;
    }
+   search(){
+     debugger
+    this.dsBSDichVu = this.BSDichVuService.dsBSDichVu ;
+    if(this.textSearch){
+      debugger
+      this.dsBSDichVu = this.dsBSDichVu.filter(
+        t => t.maDichVu.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.tenDichVu.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.maBacSi.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.tenBacSi.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) 
+
+      )
+    }
+    
+  }
+  Reset(){
+    this.dsBSDichVu = this.BSDichVuService.dsBSDichVu ;
+  }
 }

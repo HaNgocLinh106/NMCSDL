@@ -2,61 +2,69 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content white-text">
-                <div class="row">
-                    <div class="col s3">
+                <div class="">
+                    <div class="col s12">
+                        <div style="font-size: 25px;">Thêm bác sĩ: </div>
                         <form #BacSiForm="ngForm" (ngSubmit)="onSubmit(BacSiForm)">
                             <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="BacSiService.selectedBacSi._id">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input type="text" name="MaBacSi" #MaBacSi="ngModel" [(ngModel)]="BacSiService.selectedBacSi.MaBacSi" placeholder="Nhập chính xác Mã bác sĩ" required>
-                                    <label>Mã bác sĩ :
-                                    <label class="red-text">*</label>
-                                    </label>
+                                    <div>Mã bác sĩ :
+                                        <label class="red-text">*</label>
+                                    </div>
+                                    <input type="text" name="MaBacSi" #MaBacSi="ngModel" [(ngModel)]="BacSiService.selectedBacSi.MaBacSi" placeholder="" required>
+
                                     <span *ngIf="BacSiForm.submit && !BacSiService.selectedBacSi.MaBacSi">Trường này bắt buộc Nhập</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input type="text" name="TenBacSi" #TenBacSi="ngModel" [(ngModel)]="BacSiService.selectedBacSi.TenBacSi" placeholder="Nhập đầy đủ họ và tên" required>
-                                    <label>Tên bác sĩ :
-                                    <label class="red-text">*</label>
-                                    </label>
+                                    <div>Họ và tên bác sĩ :
+                                        <label class="red-text">*</label>
+                                    </div>
+                                    <input type="text" name="TenBacSi" #TenBacSi="ngModel" [(ngModel)]="BacSiService.selectedBacSi.TenBacSi" placeholder="" required>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
+                                    <div>Số điện thoại :</div>
                                     <input type="text" name="SDT" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.SDT" placeholder="">
-                                    <label>Số điện thoại :</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input type="text" name="GioiThieuChung" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.GioiThieuChung" placeholder="Nhập giới thiệu ngắn gọn về bác sĩ">
-                                    <label>Giới thiệu chung :</label>
+                                    <div>Giới thiệu chung :</div>
+                                    <input type="text" name="GioiThieuChung" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.GioiThieuChung" placeholder="">
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input type="number" name="ChiPhiTuVan" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.ChiPhiTuVan" placeholder="Đơn vị đồng">
-                                    <label>Chi phí tư vấn :</label>
+                                    <div>Chi phí tư vấn(VNĐ) :</div>
+                                    <input type="number" name="ChiPhiTuVan" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.ChiPhiTuVan" placeholder="">
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input type="text" name="ChucVi" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.ChucVi" placeholder="TS, PGS.TS,">
-                                    <label>Chức vị :</label>
+                                    <div>Chức vị :</div>
+                                    <input type="text" name="ChucVi" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.ChucVi" placeholder="TS, PGS.TS, Th.S,...">
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
+                                    <div>Khoa :</div>
                                     <input type="text" name="Khoa" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.Khoa" placeholder="">
-                                    <label>Khoa :</label>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
+                                    <div>Phòng khám :</div>
                                     <input type="text" name="PhongKham" #name="ngModel" [(ngModel)]="BacSiService.selectedBacSi.PhongKham" placeholder="">
-                                    <label>Phòng khám :</label>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -67,40 +75,49 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col s9">
-                        <table class="responsive-table highlight">
-                            <thead>
-                                <tr>
-                                    <th>Mã</th>
-                                    <th>Tên bác sĩ</th>
-                                    <th>SDT</th>
-                                    <th>Giới thiệu chung</th>
-                                    <th>CPTV</th>
-                                    <th>CV</th>
-                                    <th>Khoa</th>
-                                    <th>Phòng</th>
-                                    <th></th>
+                    <div class="col s12">
+                        <div style="font-size: 25px">Danh sách bác sĩ:</div>
+                        <div class="search-box">
+                            <input type="text" style="width:80%" id="searchBox" name="searchBox" [(ngModel)]="textSearch" placeholder="Tìm theo mã bác sĩ/tên bác sĩ/ phòng khám" />
+                            <button style="width: 10%; margin-bottom: 8px;" (click)="search()">Tìm kiếm</button>
+                            <button style="width: 8%; margin-left:5px; margin-bottom: 8px;" (click)="Reset()">Reset</button>
+                        </div>
+                        <div style="height: 500px; overflow: auto;">
+                            <table class="responsive-table highlight">
+                                <thead>
+                                    <tr>
+                                        <th>Mã</th>
+                                        <th>Tên bác sĩ</th>
+                                        <th>SDT</th>
+                                        <th>Giới thiệu chung</th>
+                                        <th>CPTV</th>
+                                        <th>CV</th>
+                                        <th>Khoa</th>
+                                        <th>Phòng</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tr *ngFor="let BS of dsBacSi">
+                                    <td>{{BS.MaBacSi}}</td>
+                                    <td>{{BS.TenBacSi}}</td>
+                                    <td>{{BS.SDT}}</td>
+                                    <td>{{BS.GioiThieuChung}}</td>
+                                    <td>{{BS.ChiPhiTuVan}}</td>
+                                    <td>{{BS.ChucVi}}</td>
+                                    <td>{{BS.Khoa}}</td>
+                                    <td>{{BS.PhongKham}}</td>
+                                    <td>
+                                        <a class="action-btn" (click)="onEdit(BS)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a class="action-btn" (click)="onDelete(BS._id,BacSiForm)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tr *ngFor="let BS of BacSiService.BacSis">
-                                <td>{{BS.MaBacSi}}</td>
-                                <td>{{BS.TenBacSi}}</td>
-                                <td>{{BS.SDT}}</td>
-                                <td>{{BS.GioiThieuChung}}</td>
-                                <td>{{BS.ChiPhiTuVan}}</td>
-                                <td>{{BS.ChucVi}}</td>
-                                <td>{{BS.Khoa}}</td>
-                                <td>{{BS.PhongKham}}</td>
-                                <td>
-                                    <a class="action-btn" (click)="onEdit(BS)">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                    <a class="action-btn" (click)="onDelete(BS._id,BacSiForm)">
-                                        <i class="material-icons">delete</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -14,7 +14,8 @@ declare var M: any;
 })
 
 export class DichVuComponent implements OnInit {
-
+  textSearch: any;
+  dsDichVu: any;
   constructor(private dichVuService: DichVuService) { }
 
   ngOnInit() {
@@ -33,7 +34,7 @@ export class DichVuComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.value._id == "") {
+    if (form.value._id == "" || form.value._id == null) {
       this.dichVuService.postDichVu(form.value).subscribe((res) => {
         this.resetForm(form);
         this.refreshDichVuList();
@@ -52,6 +53,7 @@ export class DichVuComponent implements OnInit {
   refreshDichVuList() {
     this.dichVuService.getDichVuList().subscribe((res) => {
       this.dichVuService.dsDichVu = res as DichVu[];
+      this.dsDichVu = this.dichVuService.dsDichVu;
     });
   }
 
@@ -68,5 +70,18 @@ export class DichVuComponent implements OnInit {
       });
     }
   }
+  search(){
+    this.dsDichVu = this.dichVuService.dsDichVu
+    if(this.textSearch){
+      this.dsDichVu = this.dsDichVu.filter(
+        t => t.maDichVu.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.tenDichVu.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) 
 
+      )
+    }
+    
+  }
+  Reset(){
+    this.dsDichVu = this.dichVuService.dsDichVu;
+  }
 }

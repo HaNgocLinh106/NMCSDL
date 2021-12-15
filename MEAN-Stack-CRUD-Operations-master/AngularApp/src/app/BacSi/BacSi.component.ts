@@ -15,7 +15,8 @@ declare var M: any;
 export class BacSiComponent implements OnInit {
 
   constructor(private BacSiService: BacSiService) { }
-
+  textSearch: any;
+  dsBacSi: any;
   ngOnInit() {
     this.resetForm();
     this.refreshBacSiList();
@@ -38,7 +39,7 @@ export class BacSiComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.value._id == "") {
+    if (form.value._id == "" || form.value._id == null) {
       this.BacSiService.postBacSi(form.value).subscribe((res) => {
         this.resetForm(form);
         this.refreshBacSiList();
@@ -57,6 +58,7 @@ export class BacSiComponent implements OnInit {
   refreshBacSiList() {
     this.BacSiService.getBacSiList().subscribe((res) => {
       this.BacSiService.BacSis = res as BacSi[];
+      this.dsBacSi = this.BacSiService.BacSis;
     });
   }
 
@@ -72,6 +74,21 @@ export class BacSiComponent implements OnInit {
         M.toast({ html: 'Deleted successfully', classes: 'rounded' });
       });
     }
+  }
+  search(){
+    this.dsBacSi = this.BacSiService.BacSis;
+    if(this.textSearch){
+     
+      this.dsBacSi = this.dsBacSi.filter(
+        t => t.MaBacSi.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.TenBacSi.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.PhongKham.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase())
+      )
+    }
+    
+  }
+  Reset(){
+    this.dsBacSi = this.BacSiService.BacSis;
   }
 
 }

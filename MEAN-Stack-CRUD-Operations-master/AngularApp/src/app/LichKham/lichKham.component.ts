@@ -16,6 +16,8 @@ declare var M: any;
 })
 export class LichKhamComponent implements OnInit {
   // @ViewChild('dt') table: Table;
+  textSearch: any;
+  dsLichKham: any;
   constructor(
     private lichKhamService: LichKhamService,
     private BacSiService: BacSiService) { }
@@ -112,6 +114,7 @@ _BacSi: any;
   refreshLichKhamList() {
     this.lichKhamService.getLichKhamList().subscribe((res) => {
       this.lichKhamService.dsBSLichKham = res as LichKham[];
+      this.dsLichKham= this.lichKhamService.dsBSLichKham;
     });
   }
 
@@ -134,5 +137,21 @@ _BacSi: any;
     );
     console.log(this._BacSi);
      this.lichKhamService.selectedLichKham.tenBacSi = this._BacSi.TenBacSi;
+  }
+  search(){
+    this.dsLichKham = this.lichKhamService.dsBSLichKham;
+    if(this.textSearch){
+      this.dsLichKham = this.dsLichKham.filter(
+        t => t.maBacSi.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.tenBacSi.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.ngay.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) ||
+              t.gio.toLocaleLowerCase().includes(this.textSearch.toLocaleLowerCase()) 
+
+      )
+    }
+    
+  }
+  Reset(){
+    this.dsLichKham = this.lichKhamService.dsBSLichKham;
   }
 }
